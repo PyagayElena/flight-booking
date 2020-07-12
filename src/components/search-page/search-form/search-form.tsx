@@ -1,15 +1,23 @@
 import React, { useState } from 'react'
 import './search-form.scss'
 import DatePicker from 'react-datepicker'
-import "react-datepicker/dist/react-datepicker.css"
+import 'react-datepicker/dist/react-datepicker.css'
 import Select from 'react-select'
-import makeAnimated from 'react-select/animated'
 
-const SearchForm = () => {
-  const [startDate, setStartDate] = useState<Date | null>(null)
-  const [endDate, setEndDate] = useState<Date | null>(null)
+type Props = {
+  handleSearch: (origin: string, destination: string[], departureDate: Date, returnDate: Date) => void;
+}
 
-  const animatedComponents = makeAnimated()
+type Option = {
+  label: string;
+  value: string;
+}
+
+const SearchForm = ({ handleSearch }: Props) => {
+  const [origin, setOrigin] = useState<string | null>(null)
+  const [destination, setDestination] = useState<string[]>([])
+  const [departureDate, setDepartureDate] = useState<Date | null>(null)
+  const [returnDate, setReturnDate] = useState<Date | null>(null)
 
   const cityOptions = [
     { value: 'New York', label: 'New York' },
@@ -94,10 +102,25 @@ const SearchForm = () => {
     })
   }
 
+  const onOriginChange = (option: Option) => {
+    setOrigin(!option ? null : option.value)
+  }
+
+  const onDestinationChange = (options: Option[]) => {
+    setDestination(!options ? [] : options.map((option: Option) => option.value))
+  }
+
+  const onSearch = () => {
+    if (!!origin && !!destination && !!departureDate && !!returnDate) {
+      handleSearch(origin, destination, departureDate, returnDate)
+    }
+  }
+
   return (
     <div className='search-form'>
       <div className='search-form__container'>
         <div className='search-form__wrapper'>
+
           <div className='search-form__field-wrapper'>
             <div className='search-field'>
               <div className='search-field__label'>From</div>
@@ -106,14 +129,15 @@ const SearchForm = () => {
                   closeMenuOnSelect={true}
                   placeholder='Select departure city'
                   isClearable={true}
-                  // components={animatedComponents}
                   options={cityOptions}
                   styles={singleSelectStyles}
                   noOptionsMessage={() => 'No more cities'}
+                  onChange={option => onOriginChange(option as Option)}
                 />
               </div>
             </div>
           </div>
+
           <div className='search-form__field-wrapper'>
             <div className='search-field'>
               <div className='search-field__label'>To</div>
@@ -121,26 +145,27 @@ const SearchForm = () => {
                 <Select
                   closeMenuOnSelect={false}
                   placeholder='Select destination cities'
-                  // components={animatedComponents}
                   isMulti
                   options={cityOptions}
                   styles={multiSelectStyles}
                   noOptionsMessage={() => 'No more cities'}
+                  onChange={options => onDestinationChange((options as Option[]))}
                 />
               </div>
             </div>
           </div>
+
           <div className='search-form__field-wrapper'>
             <div className='search-field'>
               <div className='search-field__label'>Departure</div>
               <DatePicker
-                className={`search-field__datepicker ${!!startDate && 'selected'}`}
+                className={`search-field__datepicker ${!!departureDate && 'selected'}`}
                 placeholderText='Select departure date'
-                selected={startDate}
-                onChange={date => setStartDate(date)}
+                selected={departureDate}
+                onChange={date => setDepartureDate(date)}
                 selectsStart
-                startDate={startDate}
-                endDate={endDate}
+                startDate={departureDate}
+                endDate={returnDate}
                 minDate={new Date()}
                 dateFormat='eeee, MMMM d'
                 popperPlacement='bottom'
@@ -158,18 +183,19 @@ const SearchForm = () => {
               />
             </div>
           </div>
+
           <div className='search-form__field-wrapper'>
             <div className='search-field'>
               <div className='search-field__label'>Return</div>
               <DatePicker
-                className={`search-field__datepicker ${!!endDate && 'selected'}`}
+                className={`search-field__datepicker ${!!returnDate && 'selected'}`}
                 placeholderText='Select return date'
-                selected={endDate}
-                onChange={date => setEndDate(date)}
+                selected={returnDate}
+                onChange={date => setReturnDate(date)}
                 selectsEnd
-                startDate={startDate}
-                endDate={endDate}
-                minDate={startDate}
+                startDate={departureDate}
+                endDate={returnDate}
+                minDate={departureDate}
                 dateFormat='eeee, MMMM d'
                 popperPlacement='bottom'
                 popperModifiers={{
@@ -187,8 +213,12 @@ const SearchForm = () => {
             </div>
           </div>
         </div>
+
         <div className='search-form__button-wrapper'>
-          <button className='search-button'>Search</button>
+          <button className={`search-button ${(!origin || !destination.length || !departureDate || !returnDate) && 'disabled'}`}
+                  onClick={onSearch}>
+            Search
+          </button>
         </div>
       </div>
     </div>

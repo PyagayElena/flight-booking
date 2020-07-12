@@ -1,11 +1,11 @@
 import React from 'react'
 import './header.scss'
-import { selectorUser, changeCurrency } from '../../../store/user-slice'
+import { selectorUser, changeCurrency, User } from '../../../store/user-slice'
 import { useDispatch, useSelector } from 'react-redux'
 import { Currency } from '../../../constants'
 
 const Header = () => {
-  const user = useSelector(selectorUser)
+  const user: User = useSelector(selectorUser)
   const dispatch = useDispatch()
 
   return (

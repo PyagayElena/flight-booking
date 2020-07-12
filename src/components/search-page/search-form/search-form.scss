@@ -8,6 +8,10 @@
   padding: 24px 40px;
   width: calc(100% - 80px);
 
+  @media (max-width: 576px) {
+    position: static;
+  }
+
   &__container {
     position: relative;
 
@@ -114,6 +118,12 @@
 
       &:hover {
         color: #006d54;
+      }
+
+      &.disabled {
+        background-color: #ededed;
+        color: #bfb7b6;
+        pointer-events: none;
       }
     }
   }
