@@ -1,38 +1,19 @@
 import React from 'react'
 import './search-page.scss'
+import SearchForm from './search-form/search-form'
+import FlightCard from './flight-card/flight-card'
 
 const SeacrhPage = () => {
+
+  const flights = [1,2,3]
   return (
     <>
-      <div className='search-form'>
-        <div className='search-form__container'>
-          <div className='search-form__wrapper'>
-            <div className='search-form__field-wrapper'>
-              <div className='search-field'>
-                <div className='search-field__select'></div>
-              </div>
-            </div>
-            <div className='search-form__field-wrapper'>
-              <div className='search-field'>
-                <div className='search-field__select'></div>
-              </div>
-            </div>
-            <div className='search-form__field-wrapper'>
-              <div className='search-field'>
-                <div className='search-field__select'></div>
-              </div>
-            </div>
-            <div className='search-form__field-wrapper'>
-              <div className='search-field'>
-                <div className='search-field__select'></div>
-              </div>
-            </div>
-          </div>
-          <div className='search-form__button-wrapper'>
-            <button className='search-button'>Search</button>
-          </div>
-        </div>
-      </div>
+      <SearchForm />
+      <ul className='flights-container'>
+        {flights.map(flight => {
+          return <li key={flight}><FlightCard /></li>
+        })}
+      </ul>
     </>
   )
 }
