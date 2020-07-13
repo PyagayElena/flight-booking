@@ -1,6 +1,10 @@
 import React from 'react'
 import './flight-card.scss'
 import { Flight } from 'services/flight'
+import { numberToPrice } from '../../../helpers/price'
+import { useSelector } from 'react-redux'
+import { selectorUser, User } from '../../../store/user-slice'
+import { numberToDuration, dateToTimeString } from 'helpers/time'
 
 type Props = {
   flight: Flight;
@@ -8,6 +12,7 @@ type Props = {
 
 const FlightCard = ({ flight }: Props) => {
   const { origin, destination, departureTime, arrivalTime, durationMinutes, dollarsPerKm } = flight
+  const user: User = useSelector(selectorUser)
   const departure: Date = new Date(departureTime)
   const arrival: Date = new Date(arrivalTime)
 
@@ -17,7 +22,7 @@ const FlightCard = ({ flight }: Props) => {
         <div className='time-wrapper'>
           <div className='time-wrapper__item'>
             <div className='time'>
-              {`${('0'  + departure.getHours()).slice(-2)}:${('0'  + departure.getMinutes()).slice(-2)}`}
+              {`${dateToTimeString(departure)}`}
             </div>
             <div className='airport-code'>{origin.airportCode}</div>
             <div className='city'>{origin.city}</div>
@@ -29,7 +34,7 @@ const FlightCard = ({ flight }: Props) => {
           </div>
           <div className='time-wrapper__item right'>
             <div className='time'>
-              {`${('0'  + arrival.getHours()).slice(-2)}:${('0'  + arrival.getMinutes()).slice(-2)}`}
+              {`${dateToTimeString(arrival)}`}
             </div>
             <div className='airport-code'>{destination.airportCode}</div>
             <div className='city'>{destination.city}</div>
@@ -37,12 +42,14 @@ const FlightCard = ({ flight }: Props) => {
         </div>
         <div className='duration-wrapper'>
           <div className='duration-description'>Flight Duration</div>
-          <div className='duration-value'>{`${Math.floor(durationMinutes / 60)}h ${durationMinutes % 60}m`}</div>
+          <div className='duration-value'>{`${numberToDuration(durationMinutes)}`}</div>
         </div>
       </div>
       <div className='flight-card__price-wrapper'>
         <div className='price-description'>Price per km</div>
-        <div className='price-value'>{`$${dollarsPerKm.toFixed(2)}/km`}</div>
+        <div className='price-value'>
+          {`${numberToPrice(dollarsPerKm, user.currency)}/km`}
+        </div>
         <button className='book-button'>Book Now</button>
       </div>
     </div>

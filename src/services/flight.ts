@@ -1,5 +1,5 @@
 // import Fetcher from './fetcher'
-import {MockFlights} from '../mocks/flights'
+import { MockFlights } from '../mocks/flights'
 
 // const apiGetFlights = 'some-api-url'
 
@@ -36,9 +36,12 @@ export default class FlightService {
       // const response: Response = await Fetcher.get(apiGetFlights, params)
       // return await response.json()
 
-      // Simulate fetch delay and return mock data
+      // Simulate fetch delay and return filtered mock data
+      const filteredFlights: Flight[] = MockFlights.filter((flight: Flight) => flight.origin.city === from &&
+        to.some(((city: string) => city === flight.destination.city)))
+
       return await new Promise(resolve =>
-                                 setTimeout(() => resolve(MockFlights), 1000))
+                                 setTimeout(() => resolve(filteredFlights), 1000))
 
     } catch (e) {
       console.log('Error while trying to getFlightList: ', e)

@@ -60,5 +60,35 @@ export const MockFlights: Flight[] = [
     arrivalTime: '2020-09-12T14:21:46.850Z',
     durationMinutes: 350,
     dollarsPerKm: 3.54
+  },
+  {
+    id: '4',
+    origin: {
+      airportCode: 'SIN',
+      city: 'Singapore'
+    },
+    destination: {
+      airportCode: 'JFK',
+      city: 'New York'
+    },
+    departureTime: '2020-09-23T12:28:46.850Z',
+    arrivalTime: '2020-09-23T19:51:46.850Z',
+    durationMinutes: 423,
+    dollarsPerKm: 4.12
+  },
+  {
+    id: '5',
+    origin: {
+      airportCode: 'JFK',
+      city: 'New York'
+    },
+    destination: {
+      airportCode: 'SIN',
+      city: 'Singapore'
+    },
+    departureTime: '2020-09-24T04:15:46.850Z',
+    arrivalTime: '2020-09-24T10:45:46.850Z',
+    durationMinutes: 430,
+    dollarsPerKm: 4.15
   }
 ]

@@ -2,6 +2,8 @@ export interface StringMap { [key: string]: string }
 
 /*
  * Converts object properties to request inline parameters, if any
+ * input: { name: 'John', surname: 'Smith' }
+ * output: '?name=John&surname=Smith'
  */
 export const objectToUrlParams = (obj?: StringMap) => {
 

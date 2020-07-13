@@ -1,3 +1,24 @@
+.flights-empty {
+  margin: auto;
+  padding: 20px;
+  width: 400px;
+  color: #252a31;
+
+  &__title {
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 28px;
+    text-align: center;
+    margin: 40px 0px 12px;
+  }
+
+  &__description {
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+  }
+}
+
 .flights-container {
   margin: auto;
   padding: 0 40px;
