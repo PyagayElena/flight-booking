@@ -1,10 +1,10 @@
 import React from 'react'
 import './flight-card.scss'
 import { Flight } from 'services/flight'
-import { numberToPrice } from '../../../helpers/price'
+import { numberToPrice } from 'helpers/price/price'
 import { useSelector } from 'react-redux'
-import { selectorUser, User } from '../../../store/user-slice'
-import { numberToDuration, dateToTimeString } from 'helpers/time'
+import { selectorUser, User } from 'store/user-slice'
+import { numberToDuration, dateToTimeString } from 'helpers/time/time'
 
 type Props = {
   flight: Flight;

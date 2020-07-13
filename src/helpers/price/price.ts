@@ -1,4 +1,4 @@
-import { Currency, CurrencySign, ExchangeRate } from '../constants'
+import { Currency, CurrencySign, ExchangeRate } from '../../constants'
 
 /*
  * Converts price in dollars to price string with the corresponding sign and value

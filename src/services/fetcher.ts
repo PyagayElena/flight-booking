@@ -3,7 +3,7 @@
  * handles headers and prepares parameters and body for request
  */
 
-import { objectToUrlParams, StringMap } from 'helpers/service'
+import { objectToUrlParams, StringMap } from 'helpers/service/service'
 
 class Fetcher {
   private headers: StringMap
